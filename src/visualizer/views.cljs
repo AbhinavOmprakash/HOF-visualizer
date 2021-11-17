@@ -2,8 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [visualizer.subs :as subs]
-   [reagent.core :as r]
-   ))
+   [reagent.core :as r]))
    
 (defn v->hic
   "returns vector elements with element at idx highlighted."
@@ -80,7 +79,7 @@
       [:div.columns.is-centered
        [:div.column.is-quarter
         [:h1.title.is-1 [:text "("] [:text f-name] [:text " "] [:text el] [:text ")"]
-         [:text " -> "] [:text (str (f el))]]]]
+         [:text " -> "] [:text (str (even? el))]]]]
       [:div.columns.is-centered
        [:div.column.is-quarter
         [:h1.title.is-1 [:text "("] [:text f-name] [:text " "] [:text el] [:text ")"]]]])))
@@ -96,7 +95,7 @@
       [:div.columns.is-centered
        [:div.column.is-quarter
         [:h1.title.is-1 [:text "("] [:text f-name] [:text " "] [:text resv] [:text " "][:text el] [:text ")"]
-         [:text " -> "] [:text (str (f resv el))]]]]
+         [:text " -> "] [:text (str (+ resv el))]]]]
       [:div.columns.is-centered
        [:div.column.is-quarter
         [:h1.title.is-1 [:text "("] [:text f-name] [:text " "] [:text el] [:text ")"]]]])))
@@ -118,9 +117,9 @@
     [:buttons.has-addons
     (for [f (keys hofs)]
       (if (= f hof)
-        [:button.button.is-success.is-selected {:on-click #(do (re-frame/dispatch [:reset-idx])
+        [:button.button.is-success.is-selected {:on-click #(do (re-frame/dispatch [:reset-everythingx])
                                                                (re-frame/dispatch [:change-hof f]))} (get hofs f)]
-        [:button.button {:on-click #(do (re-frame/dispatch [:reset-idx])
+        [:button.button {:on-click #(do (re-frame/dispatch [:reset-everything])
                                         (re-frame/dispatch [:change-hof f]))} (get hofs f)]))]))
 
 ;; (defn code-in []
@@ -132,23 +131,22 @@
 ;;       :on-change #(reset! code (-> % .-target .-value))}]
 ;;     [:button.button {:on-click #(do (re-frame/dispatch [:reset-everything]))} "run"]]))
 
-(defn code-in []
-  (let [written-text (r/atom "")]
-    (fn []
-      [:div
-       [:textarea.textarea
-        {:placeholder "(map inc [1 2 3 4])"
-         :value        @written-text
-         :on-change    #(reset! written-text (.. % -target -value))
-        ;; :on-key-press (fn [e]
-        ;;                 (when (= (.-charCode e) 13)
-        ;;      k             (.preventDefault e)
-        ;;                   (reset! written-text "")))
-         }]
-       [:button.button {:on-click #(do (re-frame/dispatch [:reset-everything])
-                                       (re-frame/dispatch [:parse-input @written-text])
-                                       (reset! written-text "")
-                                       )}]])))
+;; (defn code-in []
+;;   (let [written-text (r/atom "")]
+;;     (fn []
+;;       [:div
+;;        [:textarea.textarea
+;;         {:placeholder "(map inc [1 2 3 4])"
+;;          :value        @written-text
+;;          :on-change    #(reset! written-text (.. % -target -value))
+;;         ;; :on-key-press (fn [e]
+;;         ;;                 (when (= (.-charCode e) 13)
+;;         ;;      k             (.preventDefault e)
+;;         ;;                   (reset! written-text "")))
+;;          }]
+;;        [:button.btn.btn-blue {:on-click #(do (re-frame/dispatch [:reset-everything])
+;;                                         (re-frame/dispatch [:parse-input @written-text])
+;;                                         (reset! written-text ""))}]])))
 
 (defn main-panel []
   [:div.block]

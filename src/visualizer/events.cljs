@@ -57,7 +57,7 @@
         i (:idx db)
         new-db (dissoc db resv)
         el (get inv i)
-        new-resv (conj resv (str (f el)))]
+        new-resv (conj resv (str (inc el)))]
     (go
       (<! (utils/timeout 750))
       (re-frame/dispatch [:start]))
@@ -72,7 +72,7 @@
         new-db (dissoc db resv)
         el (get inv i)
         ; filter step
-        new-resv (if (f el)
+        new-resv (if (even? el)
                    (conj resv el)
                    resv)]
     (go
@@ -89,20 +89,12 @@
         new-db (dissoc db resv)
         el (get inv i)
         ; filter step
-        new-resv (f resv el)]
+        new-resv (+ resv el)]
     (go
       (<! (utils/timeout 750))
       (re-frame/dispatch [:start]))
     {:db (assoc new-db :resv new-resv)}))
 
-;; (defn start-comp [coeffects _]
-;;   (let [
-;;         db (:db coeffects)
-;;         inv (:v db)
-;;         outv (vec (map inc inv))
-;;         new-db (dissoc db :resv)]
-
-;;     {:db (assoc new-db :resv outv)}))
 
 (defn change-hof [coeffects event]
   (let [hof (second event)
@@ -114,30 +106,30 @@
   (let [new-db (dissoc (:db coeffects) :v)]
     {:db (assoc new-db :v [])}))
 
-(defn parse-input [coeffects event]
-  (let [in-expr (second event)
-        db (:db coeffects)
-        expr (reader/read-string in-expr)
-        [hof f v] expr
-        new-db (-> db
-                   (dissoc :v)
-                   (dissoc :hof)
-                   (dissoc :f))
-        ret-db (-> new-db
-                   (assoc :v v)
-                   (assoc :hof hof)
-                   (assoc :f f))]
-    (js/alert (str ret-db))
+;; (defn parse-input [coeffects event]
+;;   (let [in-expr (second event)
+;;         db (:db coeffects)
+;;         expr (reader/read-string in-expr)
+;;         [hof f v] expr
+;;         new-db (-> db
+;;                    (dissoc :v)
+;;                    (dissoc :hof)
+;;                    (dissoc :f))
+;;         ret-db (-> new-db
+;;                    (assoc :v v)
+;;                    (assoc :hof hof)
+;;                    (assoc :f f))]
+;;     (js/alert (str ret-db))
 
-    {:db ret-db}))
+;;     {:db ret-db}))
 
 (re-frame/reg-event-fx
  :start
  start-comp)
 
-(re-frame/reg-event-fx
- :parse-input
- parse-input)
+;; (re-frame/reg-event-fx
+;;  :parse-input
+;;  parse-input)
 
 (re-frame/reg-event-fx
  :reset-idx
@@ -153,4 +145,4 @@
 
 (re-frame/reg-event-fx
  :reset-everything
- (comp reset-idx reset-resv ))
+ (comp reset-idx reset-resv reset-inv))
