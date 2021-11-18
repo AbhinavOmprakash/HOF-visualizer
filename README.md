@@ -1,8 +1,8 @@
 # visualizer
 
-A [re-frame](https://github.com/day8/re-frame) application designed to ... well, that part is up to
-you.
+A [re-frame](https://github.com/day8/re-frame) application designed to visualize `map`, `filter`, and `reduce`
 
+see it in [action](https://abhinavomprakash.github.io/HOF-visualizer/)
 ## Getting Started
 
 ### Project Overview
