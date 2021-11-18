@@ -1,0 +1,39 @@
+.highlight{
+    color:olivedrab;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  background-color: beige;
+}
+
+.int-down{
+    animation: 1s ease-out 0s 1 slide-down;
+}
+
+.in-vector{
+
+}
+
+@keyframes slide-down{
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.center{
+    padding-top: 1in;  
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.pad {
+  padding-top: .25in;
+}
