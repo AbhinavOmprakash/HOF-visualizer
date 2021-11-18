@@ -149,19 +149,17 @@
 ;;                                         (reset! written-text ""))}]])))
 
 (defn main-panel []
-  [:div.block]
-  [:div.block]
-  [:div.container.is-align-content-center
+  [:div.container.center 
    [function-selectors]
-   [:div.block]
+   [:div.block.pad]
    [data-v]
-   [:div.block]
+   [:div.block.pad]
    [func]
-   [:div.block]
+   [:div.block.pad]
    [res]
-   [:div.block]
+   [:div.block.pad]
    [op-btns]
-   [:div.block]])
+   [:div.block.pad]])
   ;;  [code-in]
    
  
